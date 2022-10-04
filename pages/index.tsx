@@ -7,8 +7,21 @@ import SmallCard from '../components/SmallCard';
 import MediumCard from '../components/MediumCard';
 import LargeCard from '../components/LargeCard';
 import Footer from '../components/Footer';
+import { Key } from 'react';
 
-export default function Home({ exploreData, cardsData }) {
+interface Props {
+  [x: string]: any;
+  data: [Card];
+}
+
+interface Card {
+  location: string;
+  distance: string;
+  img: string;
+}
+
+//export default function Home({ exploreData, cardsData }) {
+export default function Home(props: Props) {
   return (
     <div className="">
       <Head>
@@ -24,7 +37,7 @@ export default function Home({ exploreData, cardsData }) {
           {/* Pull some data from a server - API endpoints */}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {exploreData?.map(({ img, distance, location }) => (
+            {props.exploreData?.map(({ img, distance, location }: Props) => (
               // <h1>{location}</h1>
 
               <SmallCard
@@ -40,10 +53,12 @@ export default function Home({ exploreData, cardsData }) {
         <section>
           <h2 className="text-4xl font-semibold py-8">Live Anywhere</h2>
           <div className="flex space-x-3 overflow-scroll scrollbar-hide p-3 -ml-3">
-            {cardsData?.map((item) => (
-              //<h>{item.title}</h>
-              <MediumCard key={item.img} img={item.img} title={item.title} />
-            ))}
+            {props.cardsData?.map(
+              (item: { img: Key | null | undefined; title: any }) => (
+                //<h>{item.title}</h>
+                <MediumCard key={item.img} img={item.img} title={item.title} />
+              )
+            )}
           </div>
         </section>
 
